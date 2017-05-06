@@ -7,6 +7,28 @@ import { Header } from './common';
 import logo from '../assets/logo.svg';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      players: []
+    }
+  }
+
+  componentDidMount() {
+    this.getPlayers();
+  }
+
+  getPlayers() {
+    fetch('https://dev.api.mixbrgames.com/api/v1/player/search')
+      .then((response) => response.json())
+      .then((body) => {
+        this.setState({
+          players: body.results
+        });
+      });
+  }
+
   render() {
     return (
       <div 
@@ -20,7 +42,8 @@ class App extends Component {
         <PlayerList
           classeContainer="List-container"
           classeCard="List-card"
-        />
+          playerList={this.state.players}
+        />  
       </div>
     );
   }

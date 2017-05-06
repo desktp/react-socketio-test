@@ -25,6 +25,10 @@
   padding: 10px;
   background-color: rgb(200,200,200);
   height: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto)
 }
 
 .List-card {

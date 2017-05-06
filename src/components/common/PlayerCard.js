@@ -1,8 +1,8 @@
 import React from 'react';
 
-const PlayerCard = ({ classeCard }) => (
+const PlayerCard = ({ classeCard, player }) => (
   <div className={classeCard}>
-    <p>Player</p>
+    <p>{player.username}</p>
   </div>
 );
 
