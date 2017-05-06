@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './css/App.css';
 
 import PlayerList from './PlayerList';
 import { Header } from './common';
@@ -11,12 +11,24 @@ class App extends Component {
 
     this.state = {
       players: [],
-      width: ''
+      width: 0
     }
+
+    this.updateWidth = this.updateWidth.bind(this);
   }
 
   componentDidMount() {
     this.getPlayers();
+    this.updateWidth();
+    window.addEventListener('resize', this.updateWidth);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWidth);
+  }
+
+  updateWidth() {
+    this.setState({ width: window.innerWidth });
   }
 
   getPlayers() {
@@ -41,6 +53,7 @@ class App extends Component {
         <Header />
         <PlayerList
           playerList={this.state.players}
+          width={this.state.width}
         />  
       </div>
     );
