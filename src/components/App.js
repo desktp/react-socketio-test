@@ -4,14 +4,14 @@ import './App.css';
 import PlayerList from './PlayerList';
 import { Header } from './common';
 
-import logo from '../assets/logo.svg';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      players: []
+      players: [],
+      width: ''
     }
   }
 
@@ -30,18 +30,16 @@ class App extends Component {
   }
 
   render() {
+    const styles = {
+      appStyle: {
+        height: '100%'  
+      },
+    }
+
     return (
-      <div 
-        className="App"
-      >
-        <Header 
-          classeHeader="App-header" 
-          classeLogo="App-logo"
-          logo={logo} 
-        />
+      <div style={styles.appStyle}>
+        <Header />
         <PlayerList
-          classeContainer="List-container"
-          classeCard="List-card"
           playerList={this.state.players}
         />  
       </div>
