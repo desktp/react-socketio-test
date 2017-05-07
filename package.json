@@ -6,15 +6,17 @@
     "promise-polyfill": "^6.0.2",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "socket.io": "^1.7.3",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"cd server && node index.js\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "proxy": "http://localhost:3001/"
 }

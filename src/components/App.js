@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import io from 'socket.io-client';
 import './css/App.css';
 
 import PlayerList from './PlayerList';
@@ -15,12 +16,17 @@ class App extends Component {
     }
 
     this.updateWidth = this.updateWidth.bind(this);
+
+    //socket.io
+    this.socket = io();
   }
 
   componentDidMount() {
     this.getPlayers();
     this.updateWidth();
     window.addEventListener('resize', this.updateWidth);
+
+    this.socket.emit('lobby', { lobby: 'test' });
   }
 
   componentWillUnmount() {
