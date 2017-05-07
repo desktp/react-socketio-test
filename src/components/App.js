@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+
 import './css/App.css';
 
 import PlayerList from './PlayerList';
@@ -55,13 +61,21 @@ class App extends Component {
     }
 
     return (
-      <div style={styles.appStyle}>
-        <Header />
-        <PlayerList
-          playerList={this.state.players}
-          width={this.state.width}
-        />  
-      </div>
+      <Router style={styles.appStyle}>
+        <div>
+          <Header />
+
+          <Route 
+            exact
+            render={() => 
+              <PlayerList
+                playerList={this.state.players}
+                width={this.state.width}
+              />
+            }
+          />
+        </div>  
+      </Router>
     );
   }
 }
