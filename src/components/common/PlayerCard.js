@@ -32,9 +32,9 @@ const PlayerCard = ({ player, joinLobby }) => (
     {
       player.is_available 
       ? 
-      (<p>Possui time</p>) 
+      (<p>Não possui time</p>) 
       :
-      (<p>Não possui time</p>)
+      (<p>Possui time</p>)
     }
   </div>
 );

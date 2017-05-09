@@ -37,15 +37,22 @@ const getCols = (width) => {
   }
 }
 
-const PlayerList = ({ playerList = [], width, joinLobby }) => (
-  <div style={getCols(width)}>
-    {playerList.map((player) => (
-      <PlayerCard
-        key={player.id}
-        player={player}
-        joinLobby={joinLobby}
-      />
-    ))}
+const PlayerList = ({ playerList = [], width, joinLobby, showOnlyWithteam, checkBox }) => (
+  <div>
+    <input
+      type='checkbox'
+      checked={showOnlyWithteam}
+      onChange={checkBox}
+    /> Mostrar apenas jogadores com time
+    <div style={getCols(width)}>
+      {playerList.map((player) => (
+        <PlayerCard
+          key={player.id}
+          player={player}
+          joinLobby={joinLobby}
+        />
+      ))}
+    </div>
   </div>
 );
 

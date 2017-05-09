@@ -16,6 +16,10 @@ const containerStyle = {
 
 const Lobby = ({ playersInLobby, leaveLobby }) => (
   <div style={containerStyle.base}>
+    {playersInLobby.length <= 0 &&
+      <p>Não há players no lobby!</p>
+    }
+
     {playersInLobby.map((player) => (
       <PlayerIcon
         key={player.id}

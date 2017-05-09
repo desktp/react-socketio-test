@@ -20,7 +20,9 @@ class App extends Component {
     this.state = {
       players: [],
       playersInLobby: [],
-      width: 0
+      filteredPlayers: [],
+      width: 0,
+      showOnlyWithteam: true
     }
 
     this.updateWidth = this.updateWidth.bind(this);
@@ -52,7 +54,19 @@ class App extends Component {
         this.setState({
           players: body.results
         });
+
+        this.filterPlayers(body.results);
       });
+  }
+
+  filterPlayers(players) {
+    const filteredPlayers = players.filter((player) => {
+      console.log(`player: ${player.username} available: ${player.is_available} state: ${this.state.showOnlyWithteam}`);
+
+      return !(player.is_available && this.state.showOnlyWithteam);
+    });
+
+    this.setState({ filteredPlayers });
   }
 
   joinLobby(player) {
@@ -74,6 +88,12 @@ class App extends Component {
     });
 
     return found;
+  }
+
+  checkBox() {
+    const showOnlyWithteam = !this.state.showOnlyWithteam;
+
+    this.setState({ showOnlyWithteam }, () => this.filterPlayers(this.state.players));
   }
 
   initLobbyListener() {
@@ -122,9 +142,11 @@ class App extends Component {
             path='/'
             render={() => 
               <PlayerList
-                playerList={this.state.players}
+                playerList={this.state.filteredPlayers}
                 width={this.state.width}
                 joinLobby={this.joinLobby.bind(this)}
+                showOnlyWithteam={this.state.showOnlyWithteam}
+                checkBox={this.checkBox.bind(this)}
               />
             }
           />
