@@ -8,18 +8,18 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
   socket.on('join lobby', function(data){
-    console.log(`player joined: ${data.player.username}`);
+    console.log(`socket.io: player joined: ${data.player.username}`);
 
     socket.join('lobby', function() {
-      io.in('lobby').emit('player joined', data.player);
+      io.emit('player joined', data.player);
     });
   });
 
   socket.on('leave lobby', function(data){
-    console.log(`player leaving: ${data.player.username}`);
+    console.log(`socket.io: player leaving: ${data.player.username}`);
 
     socket.leave('lobby', function() {
-      io.in('lobby').emit('player left', data);
+      io.emit('player left', data.player);
     });
   });
 });

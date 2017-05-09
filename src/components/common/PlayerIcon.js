@@ -21,12 +21,13 @@ const styles = {
   }
 };
 
-const PlayerIcon = ({ player }) => (
+const PlayerIcon = ({ player, leaveLobby }) => (
   <div style={styles.cardStyle}>
     <img src={player.avatar_medium} alt='avatar' style={styles.avatarStyle}/>
     <p style={styles.nickStyle}>{player.username}</p>
     <button 
       style={styles.buttonStyle}
+      onClick={() => leaveLobby({...player})}
     >
       Sair do Lobby
     </button>

@@ -14,12 +14,13 @@ const containerStyle = {
   },
 }
 
-const Lobby = ({ playersInLobby }) => (
+const Lobby = ({ playersInLobby, leaveLobby }) => (
   <div style={containerStyle.base}>
     {playersInLobby.map((player) => (
       <PlayerIcon
         key={player.id}
         player={player}
+        leaveLobby={leaveLobby}       
       />
     ))}
   </div>

@@ -59,21 +59,46 @@ class App extends Component {
     this.socket.emit('join lobby', { player });
   }
 
+  leaveLobby(player) {
+    this.socket.emit('leave lobby', { player });
+  }
+
+  checkPlayer(player) {
+    const playersInLobby = this.state.playersInLobby;
+    let found = false;
+
+    playersInLobby.forEach((p) => {
+      if (player.username === p.username){          
+        found = true;
+      }
+    });
+
+    return found;
+  }
+
   initLobbyListener() {
     this.socket.on('player joined', (data) => {
       const playersInLobby = this.state.playersInLobby;
-      let found = false;
 
-      playersInLobby.forEach((player) => {
-        if (player.username === data.username){          
-          found = true;
-        }
-      });
-
-      if (!found || playersInLobby.length <= 0) {
+      if (!this.checkPlayer(data) || playersInLobby.length <= 0) {
         playersInLobby.push(data);
       } else {
         alert(`Player ${data.username} já está no lobby!`);
+      }
+
+      this.setState({ playersInLobby });
+    });
+
+    this.socket.on('player left', (data) => {
+      const playersInLobby = this.state.playersInLobby;
+      if (this.checkPlayer(data)) {
+        console.log('found player!');
+
+        playersInLobby.forEach((p, index) => {
+          if (p.username === data.username) {
+            playersInLobby.splice(index, 1);
+          }
+        });
       }
 
       this.setState({ playersInLobby });
@@ -108,6 +133,7 @@ class App extends Component {
             render={() => 
               <Lobby
                 playersInLobby={this.state.playersInLobby}
+                leaveLobby={this.leaveLobby.bind(this)}
               />
             }
           />
