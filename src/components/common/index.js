@@ -1,2 +1,3 @@
-export * from './Header.js';
-export * from './PlayerCard.js';
+export * from './Header';
+export * from './PlayerCard';
+export * from './PlayerIcon';

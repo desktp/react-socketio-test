@@ -9,6 +9,7 @@ import {
 import './css/App.css';
 
 import PlayerList from './PlayerList';
+import Lobby from './Lobby';
 import { Header } from './common';
 
 
@@ -93,11 +94,20 @@ class App extends Component {
 
           <Route 
             exact
+            path='/'
             render={() => 
               <PlayerList
                 playerList={this.state.players}
                 width={this.state.width}
                 joinLobby={this.joinLobby.bind(this)}
+              />
+            }
+          />
+          <Route
+            path='/lobby'
+            render={() => 
+              <Lobby
+                playersInLobby={this.state.playersInLobby}
               />
             }
           />
