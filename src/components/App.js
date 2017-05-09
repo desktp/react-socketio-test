@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  //Link
 } from 'react-router-dom';
 
 import './css/App.css';
@@ -18,6 +18,7 @@ class App extends Component {
 
     this.state = {
       players: [],
+      playersInLobby: [],
       width: 0
     }
 
@@ -32,7 +33,7 @@ class App extends Component {
     this.updateWidth();
     window.addEventListener('resize', this.updateWidth);
 
-    this.socket.emit('lobby', { lobby: 'test' });
+    this.initLobbyListener();
   }
 
   componentWillUnmount() {
@@ -53,6 +54,31 @@ class App extends Component {
       });
   }
 
+  joinLobby(player) {
+    this.socket.emit('join lobby', { player });
+  }
+
+  initLobbyListener() {
+    this.socket.on('player joined', (data) => {
+      const playersInLobby = this.state.playersInLobby;
+      let found = false;
+
+      playersInLobby.forEach((player) => {
+        if (player.username === data.username){          
+          found = true;
+        }
+      });
+
+      if (!found || playersInLobby.length <= 0) {
+        playersInLobby.push(data);
+      } else {
+        alert(`Player ${data.username} já está no lobby!`);
+      }
+
+      this.setState({ playersInLobby });
+    });
+  }
+
   render() {
     const styles = {
       appStyle: {
@@ -71,6 +97,7 @@ class App extends Component {
               <PlayerList
                 playerList={this.state.players}
                 width={this.state.width}
+                joinLobby={this.joinLobby.bind(this)}
               />
             }
           />

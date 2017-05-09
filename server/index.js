@@ -7,7 +7,21 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
+  socket.on('join lobby', function(data){
+    console.log(`player joined: ${data.player.username}`);
+
+    socket.join('lobby', function() {
+      io.in('lobby').emit('player joined', data.player);
+    });
+  });
+
+  socket.on('leave lobby', function(data){
+    console.log(`player leaving: ${data.player.username}`);
+
+    socket.leave('lobby', function() {
+      io.in('lobby').emit('player left', data);
+    });
+  });
 });
 
 http.listen(3001, function(){

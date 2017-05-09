@@ -19,11 +19,11 @@ const styles = {
   }
 };
 
-const PlayerCard = ({ player }) => (
+const PlayerCard = ({ player, joinLobby }) => (
   <div style={styles.cardStyle}>
     <button 
       style={styles.buttonStyle}
-      onClick={() => alert(`${player.username} entrou no lobby!`)}
+      onClick={() => joinLobby({...player})}
     >
       Entrar no Lobby
     </button>

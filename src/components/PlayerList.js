@@ -37,12 +37,13 @@ const getCols = (width) => {
   }
 }
 
-const PlayerList = ({ playerList = [], width }) => (
+const PlayerList = ({ playerList = [], width, joinLobby }) => (
   <div style={getCols(width)}>
     {playerList.map((player) => (
       <PlayerCard
         key={player.id}
         player={player}
+        joinLobby={joinLobby}
       />
     ))}
   </div>
